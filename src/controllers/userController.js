@@ -49,3 +49,32 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+// Update User
+exports.updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { name, email, role } = req.body;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { name, email, role },
+      { new: true, runValidators: true }
+    );
+    if (!updatedUser) return res.status(404).send('User not found');
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
+
+// Delete User
+exports.deleteUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedUser = await User.findByIdAndDelete(id);
+    if (!deletedUser) return res.status(404).send('User not found');
+    res.status(200).send('User deleted successfully');
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
