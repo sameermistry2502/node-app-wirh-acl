@@ -26,5 +26,5 @@ This project demonstrates a Node.js-based application with role management, prov
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/sameermistry2502/node-app-with-acl.git
+[git clone https://github.com/sameermistry2502/node-app-with-acl.git](https://github.com/sameermistry2502/node-app-wirh-acl.git)
 cd node-app-with-acl
