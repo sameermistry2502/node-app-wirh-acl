@@ -5,6 +5,7 @@ const {
   getAllUsers,
   updateUser,
   deleteUser,
+  getPaginatedUsers
 } = require("../controllers/userController");
 const { auth, authorizeRoles } = require("../middleware/auth");
 const userValidator = require("../middleware/userValidator");
@@ -17,6 +18,7 @@ router.post("/login", userValidator.login, loginUser);
 
 // Protected routes
 router.get("/users", auth, authorizeRoles("admin"), getAllUsers);
+router.get('/users-with-pagination', getPaginatedUsers);
 router.put("/users/:id", auth, authorizeRoles("admin"), updateUser); // Update user
 router.delete("/users/:id", auth, authorizeRoles("admin"), deleteUser); //
 

@@ -66,6 +66,36 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+// Get paginated users
+exports.getPaginatedUsers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1; // Current page number, default is 1
+  const perPage = parseInt(req.query.perPage) || 10; // Results per page, default is 10
+  console.log(page);
+  try {
+    // Count total items
+    const totalItems = await User.count();
+
+    // Fetch paginated data
+    const users = await User.find({
+      offset: (page - 1) * perPage, // Skip items for previous pages
+      limit: perPage,               // Limit results per page
+    });
+
+    const totalPages = Math.ceil(totalItems / perPage);
+
+    res.json({
+      data: users,
+      currentPage: page,
+      perPage,
+      totalItems,
+      totalPages,
+    });
+  } catch (error) {
+    console.error('Error occurred while fetching paginated users:', error);
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+};
+
 // Update User
 exports.updateUser = async (req, res) => {
   const { id } = req.params;
